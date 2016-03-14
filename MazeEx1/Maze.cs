@@ -47,13 +47,14 @@ namespace MazeEx1
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
             Console.ReadLine();
         }
         public void ConvertMaze2Graph(Node node)
         {
             //try left
             //check if went of left side of grid
-            if (node.getRow() - 1 > 0)
+            if (node.getRow() - 1 >= 0)
             {
                 int i = node.getRow() - 1;
                 int j = node.getCol();
@@ -112,7 +113,7 @@ namespace MazeEx1
 
             //try up
             //check if went of left side of grid
-            if (node.getCol() - 1 > 0)
+            if (node.getCol() - 1 >= 0)
             {
                 int i = node.getRow();
                 int j = node.getCol() - 1;
