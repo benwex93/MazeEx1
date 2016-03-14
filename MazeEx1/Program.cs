@@ -10,6 +10,7 @@ namespace MazeEx1
     {
         static void Main(string[] args)
         {
+            Console.Write("A Change");
         }
     }
 }
