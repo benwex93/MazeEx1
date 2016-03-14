@@ -11,6 +11,7 @@ namespace MazeEx1
         static void Main(string[] args)
         {
             Console.Write("A Change");
+            Console.Write("A Second Change");
         }
     }
 }
