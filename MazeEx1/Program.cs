@@ -10,8 +10,12 @@ namespace MazeEx1
     {
         static void Main(string[] args)
         {
-            Console.Write("A Change");
-            Console.Write("A Second Change");
+            string Name = "MyMaze";
+            //string MazeString = "100101100";
+            string MazeString = "1000010100000110";
+            Location start = new Location(0, 1);
+            Location end = new Location(2,2);
+            Maze Maze1 = new Maze(Name, MazeString, start, end);
         }
     }
 }
