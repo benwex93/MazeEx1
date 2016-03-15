@@ -8,7 +8,7 @@ namespace MazeEx1
 {
     class Maze
     {
-        string name, mazeString;
+        string name;
         Location beginning, end;
         Node [,] mazeArray;
         int arrayRowCount, arrayColCount;
@@ -16,20 +16,17 @@ namespace MazeEx1
         public Maze(string name, string mazeString, Location beginning, Location end)
         {
             this.name = name;
-            this.mazeString = mazeString;
             this.beginning = beginning;
             this.end = end;
-            InitMazeArray();
-            start = mazeArray[beginning.GetRow(), beginning.GetCol()];
-            start.SetValue('*');
-            finish = mazeArray[end.GetRow(), end.GetCol()];
-            finish.SetValue('#');
+            //allocate maze array with nodes
+            InitilizeMazeArray(mazeString);
+            //create connected graph of path using maze array
             ConvertMaze2Graph(start);
             PrintArray();
         }
-        public void InitMazeArray()
+        public void InitilizeMazeArray(string mazeString)
         {
-
+            //creates square array of sqr(str.len)*sqr(str.len)
             arrayRowCount = (int)Math.Sqrt(mazeString.Length);
             arrayColCount = arrayRowCount;
             mazeArray = new Node[arrayRowCount, arrayColCount];
@@ -40,6 +37,12 @@ namespace MazeEx1
                     mazeArray[i, j] = new Node(i, j, mazeString[(i * arrayRowCount) + j]);
                 }
             }
+            //assign start to node
+            this.start = mazeArray[beginning.GetRow(), beginning.GetCol()];
+            this.start.SetValue('*');
+            //assign finish to node
+            this.finish = mazeArray[end.GetRow(), end.GetCol()];
+            this.finish.SetValue('#');
         }
         public void PrintArray()
         {
@@ -54,132 +57,59 @@ namespace MazeEx1
             Console.WriteLine();
             Console.ReadLine();
         }
-        public void ConvertMaze2Graph(Node node)
+        public void TraverseNode(Node node, char direction, int i, int j)
         {
-            //try left
-            //check if went of left side of grid
-            if (node.getRow() - 1 >= 0)
+            bool open = false;
+            switch (direction)
             {
-                int i = node.getRow() - 1;
-                int j = node.getCol();
-                //if hit wall, stops
-                if (mazeArray[i, j].GetValue() == '1')
-                {
-                    node.SetLeft(null);
-                }
-                //found open spot and keeps going
-                else if (mazeArray[i,j].GetValue() == '0' || mazeArray[i, j].GetValue() == '#')
-                {
-                    node.SetLeft(mazeArray[i, j]);
-                    if(mazeArray[i, j].GetValue() == '0')
-                        mazeArray[i, j].SetValue('2');
-                    ConvertMaze2Graph(mazeArray[i, j]);
-                }
-                else if (mazeArray[i, j].GetValue() == '2' || mazeArray[i, j].GetValue() == '*'
-                    || mazeArray[i, j].GetValue() == '#')
-                {
-                    node.SetLeft(mazeArray[i, j]);
-                }
+                case 'L':
+                    if (i < 0)
+                        node.SetLeft(null);
+                    else if (mazeArray[i, j].GetValue() == '1')
+                        node.SetLeft(null);
+                    else { node.SetLeft(mazeArray[i, j]); open = true; }
+                    break;
+                case 'R':
+                    if (i >= arrayRowCount)
+                        node.SetRight(null);
+                    else if (mazeArray[i, j].GetValue() == '1')
+                        node.SetLeft(null);
+                    else { node.SetLeft(mazeArray[i, j]); open = true; }
+                    break;
+                case 'U':
+                    if (j < 0)
+                        node.SetUp(null);
+                    else if (mazeArray[i, j].GetValue() == '1')
+                        node.SetUp(null);
+                    else { node.SetLeft(mazeArray[i, j]); open = true; }
+                    break;
+                case 'D':
+                    if (j >= arrayColCount)
+                        node.SetDown(null);
+                    else if (mazeArray[i, j].GetValue() == '1')
+                        node.SetDown(null);
+                    else { node.SetLeft(mazeArray[i, j]); open = true; }
+                    break;
+                default:
+                    break;
             }
-            //went off grid
-            else
+            if (open && (mazeArray[i, j].GetValue() == '0' || mazeArray[i, j].GetValue() == '#'))
             {
-                node.SetLeft(null);
+                //must set value before travering if reached 0
+                if (mazeArray[i, j].GetValue() == '0')
+                    mazeArray[i, j].SetValue('2');
+                TraverseNode(mazeArray[i, j], 'L', i - 1, j);
+                TraverseNode(mazeArray[i, j], 'R', i + 1, j);
+                TraverseNode(mazeArray[i, j], 'U', i, j - 1);
+                TraverseNode(mazeArray[i, j], 'D', i, j + 1);
             }
-
-
-            //try right
-            //check if went of left side of grid
-            if (node.getRow() + 1 < arrayRowCount)
-            {
-                int i = node.getRow() + 1;
-                int j = node.getCol();
-                //if hit wall, stops
-                if (mazeArray[i, j].GetValue() == '1')
-                {
-                    node.SetRight(null);
-                }
-                //found open spot and keeps going
-                else if (mazeArray[i, j].GetValue() == '0' || mazeArray[i, j].GetValue() == '#')
-                {
-                    node.SetRight(mazeArray[i, j]);
-                    if (mazeArray[i, j].GetValue() == '0')
-                        mazeArray[i, j].SetValue('2');
-                    ConvertMaze2Graph(mazeArray[i, j]);
-                }
-                else if (mazeArray[i, j].GetValue() == '2' || mazeArray[i, j].GetValue() == '*'
-                    || mazeArray[i, j].GetValue() == '#')
-                {
-                    node.SetRight(mazeArray[i, j]);
-                }
-            }
-            //went off grid
-            else
-            {
-                node.SetRight(null);
-            }
-
-            //try up
-            //check if went of left side of grid
-            if (node.getCol() - 1 >= 0)
-            {
-                int i = node.getRow();
-                int j = node.getCol() - 1;
-                //if hit wall, stops
-                if (mazeArray[i, j].GetValue() == '1')
-                {
-                    node.SetUp(null);
-                }
-                //found open spot and keeps going
-                else if (mazeArray[i, j].GetValue() == '0' || mazeArray[i, j].GetValue() == '#')
-                {
-                    node.SetUp(mazeArray[i, j]);
-                    if (mazeArray[i, j].GetValue() == '0')
-                        mazeArray[i, j].SetValue('2');
-                    ConvertMaze2Graph(mazeArray[i, j]);
-                }
-                else if (mazeArray[i, j].GetValue() == '2' || mazeArray[i, j].GetValue() == '*'
-                    || mazeArray[i, j].GetValue() == '#')
-                {
-                    node.SetUp(mazeArray[i, j]);
-                }
-            }
-            //went off grid
-            else
-            {
-                node.SetUp(null);
-            }
-
-            //try up
-            //check if went of left side of grid
-            if (node.getCol() + 1 < arrayColCount)
-            {
-                int i = node.getRow();
-                int j = node.getCol() + 1;
-                //if hit wall, stops
-                if (mazeArray[i, j].GetValue() == '1')
-                {
-                    node.SetDown(null);
-                }
-                //found open spot and keeps going
-                else if (mazeArray[i, j].GetValue() == '0' || mazeArray[i, j].GetValue() == '#')
-                {
-                    node.SetDown(mazeArray[i, j]);
-                    if (mazeArray[i, j].GetValue() == '0')
-                        mazeArray[i, j].SetValue('2');
-                    ConvertMaze2Graph(mazeArray[i, j]);
-                }
-                else if (mazeArray[i, j].GetValue() == '2' || mazeArray[i, j].GetValue() == '*'
-                    || mazeArray[i, j].GetValue() == '#')
-                {
-                    node.SetDown(mazeArray[i, j]);
-                }
-            }
-            //went off grid
-            else
-            {
-                node.SetDown(null);
-            }
+        }
+        public void ConvertMaze2Graph(Node start)
+        {
+            TraverseNode(start, 'L', start.getRow() - 1, start.getCol());
+            TraverseNode(start, 'R', start.getRow() + 1, start.getCol());
+            TraverseNode(start, 'U', start.getRow(), start.getCol() - 1);
+            TraverseNode(start, 'D', start.getRow(), start.getCol() + 1);
         }
         public void write(int write)
         {
