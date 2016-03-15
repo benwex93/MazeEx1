@@ -8,8 +8,8 @@ namespace MazeEx1
 {
     class Node
     {
-        public Location location;
-        public Node left, right, up, down;
+        Location location;
+        Node left, right, up, down;
         char value;
         public Node(int i, int j, char value)
         {
@@ -32,9 +32,41 @@ namespace MazeEx1
         {
             return value;
         }
-        public void setValue(char value)
+        public void SetValue(char value)
         {
             this.value = value;
+        }
+        public void SetLeft(Node leftNode)
+        {
+            this.left = leftNode;
+        }
+        public void SetRight(Node rightNode)
+        {
+            this.right = rightNode;
+        }
+        public void SetUp(Node upNode)
+        {
+            this.up = upNode;
+        }
+        public void SetDown(Node downNode)
+        {
+            this.down = downNode;
+        }
+        public Node GetLeft()
+        {
+            return this.left;
+        }
+        public Node GetRight()
+        {
+            return this.right;
+        }
+        public Node GetUp()
+        {
+            return this.up;
+        }
+        public Node GetDown()
+        {
+            return this.down;
         }
     }
 }
