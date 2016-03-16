@@ -8,29 +8,12 @@ namespace MazeEx1
 {
     class Location
     {
-        int row;
-        int col;
+        public int i { get; set; }
+        public int j { get; set; }
         public Location(int row, int col)
         {
-            this.row = row;
-            this.col = col;
+            this.i = i;
+            this.j = j;
         }
-        public int GetRow()
-        {
-            return row;
-        }
-        public void SetRow(int i)
-        {
-            this.row = i;
-        }
-        public int GetCol()
-        {
-            return col;
-        }
-        public void SetCol(int j)
-        {
-            this.col = j;
-        }
-
     }
 }
