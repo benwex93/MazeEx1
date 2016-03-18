@@ -8,7 +8,7 @@ namespace MazeEx1
 {
     class RandomMazeMaker : IMazeMakeable
     {
-        public ISolvable createMaze(Maze mazeToMake)
+        public void createMaze(Maze mazeToMake)
         {
             throw new NotImplementedException();
         }

@@ -10,7 +10,7 @@ namespace MazeEx1
     {
         public Node(int i, int j, char value)
         {
-            location = new Location(i,j);
+            this.location = new Location(i,j);
             this.value = value;
         }
         public Node left { get; set; }

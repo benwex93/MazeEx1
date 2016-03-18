@@ -47,7 +47,7 @@
     <Compile Include="BreadthFSSolution.cs" />
     <Compile Include="DFSMazeMaker.cs" />
     <Compile Include="IMazeMakeable.cs" />
-    <Compile Include="ISolvable.cs" />
+    <Compile Include="ISolution.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="MazeDataBase.cs" />

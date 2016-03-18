@@ -8,9 +8,9 @@ namespace MazeEx1
 {
     class Location
     {
-        public int i { get; set; }
-        public int j { get; set; }
-        public Location(int row, int col)
+        public int i { get;}
+        public int j { get;}
+        public Location(int i, int j)
         {
             this.i = i;
             this.j = j;

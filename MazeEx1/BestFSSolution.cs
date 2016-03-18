@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace MazeEx1
 {
-    class BestFSSolution :  Printable , ISolvable
+    class BestFSSolution :  Printable , ISolution
     {
-        public string name { get; }
-        public int mazeSize { get; }
-        public BestFSSolution(Maze mazeToSolve)
+        string name;
+        int mazeSize;
+        public BestFSSolution()
         {
-            this.name = mazeToSolve.name;
-            this.mazeSize = mazeToSolve.mazeSize;
+
         }
         public void SolveMaze(Maze maze)
         {
-            throw new NotImplementedException();
+            this.name = maze.name;
+            this.mazeSize = maze.mazeSize;
         }
 
     }
