@@ -10,6 +10,7 @@ namespace MazeEx1
     {
         string name;
         int mazeSize;
+        Node start;
         public BestFSSolution()
         {
 

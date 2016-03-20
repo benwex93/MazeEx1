@@ -14,7 +14,7 @@ namespace MazeEx1
             int generateType;
             string name;
             //must be between 2 and 75
-            const int mazeSize =75;
+            const int mazeSize = 65;
             Maze mazeRetrieved;
 
             //get client input here
@@ -28,6 +28,8 @@ namespace MazeEx1
                         maze.CreateMaze(new RandomMazeMaker());
                     if (generateType == 1)
                         maze.CreateMaze(new DFSMazeMaker());
+                    Console.Write(maze.ToString());
+                    maze.Solve(new BreadthFSSolution());
                     Console.Write(maze.ToString());
                     Console.Read();
                     //MazeDataBase.AddMaze(Maze);

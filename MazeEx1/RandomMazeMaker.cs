@@ -145,6 +145,9 @@ namespace MazeEx1
                 directionsList.RemoveAt(randomIndex);
             }
         }
+        /// <summary>
+        /// Traverses through original path node by node randomly exploring outward until it reaches itself again or a wall
+        /// </summary>
         public void RandomizeRemainingNodes()
         {
             Node nodeToBranchOut;
@@ -154,9 +157,11 @@ namespace MazeEx1
                 {
                     if (mazeArray[i, j] != null)
                     {
+                        //if found one of the nodes on the main path
                         if (mazeArray[i, j].specialVal == 'M')
                         {
                             nodeToBranchOut = mazeArray[i, j];
+                            //makes list so it can loop through all direction in random order
                             List<int> directionsList = new List<int>();
                             for (int directionCases = 0; directionCases < 4; directionCases++)
                                 directionsList.Add(directionCases);
@@ -169,21 +174,23 @@ namespace MazeEx1
                                     //go left
                                     case 0:
                                         if (nodeToBranchOut.location.i - 1 < 0)
-                                        { //if out of bounds
+                                        { //if out of bounds removes direction from possible direction list
                                             nodeToBranchOut.left = null;
                                             directionsList.RemoveAt(randomIndex);
                                         }
-                                        //if node from main path allow it to connect to other nodes
+                                        //if node to left is null, initializes it and explores it
                                         else if (mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j] == null)
                                         {
                                             mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j]
                                                 = new Node(nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j, '0', 0);
                                             nodeToBranchOut.left = mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j];
                                             nodeToBranchOut = nodeToBranchOut.left;
+                                            //can explore all directions now
                                             directionsList.Clear();
                                             for (int directionCases = 0; directionCases < 4; directionCases++)
                                                 directionsList.Add(directionCases);
                                         }
+                                        //if node to left has already been initialized and is not wall does not do anything
                                         else
                                         {
                                             directionsList.RemoveAt(randomIndex);

@@ -25,7 +25,7 @@ namespace MazeEx1
         public void Solve(ISolution solveType)
         {
             //if Maze has no solution yet of this type
-            if(this.mazeSolution.GetType() == solveType.GetType() && mazeSolution == null)
+            if(mazeSolution == null)
                 solveType.SolveMaze(this);
         }
         public override string ToString()

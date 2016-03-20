@@ -16,7 +16,7 @@ namespace MazeEx1
             visualMazeArray = new char[mazeSize * 2, mazeSize * 2];
             TraverveNodes(start, start.location.i * 2, start.location.j * 2);
             visualMazeArray[start.location.i * 2, start.location.j * 2] = start.specialVal;
-            visualMazeArray[end.location.i * 2, end.location.j * 2] = '#';
+            visualMazeArray[end.location.i * 2, end.location.j * 2] = end.specialVal;
             return GetStringFromArray();
         }
         public string GetStringFromArray()
@@ -32,6 +32,8 @@ namespace MazeEx1
                         mazeString += "S";
                     else if (visualMazeArray[col, row] == '#')
                         mazeString += "E";
+                    else if (visualMazeArray[col, row] == 'V')
+                        mazeString += "+";
                     else
                         mazeString += " ";
                     // mazeString +=(visualMazeArray[col, row]);
