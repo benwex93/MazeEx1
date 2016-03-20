@@ -13,11 +13,12 @@ namespace MazeEx1
             int commandNum;
             int generateType;
             string name;
-            const int mazeSize = 27;
+            //must be between 2 and 75
+            const int mazeSize =75;
             Maze mazeRetrieved;
 
             //get client input here
-            commandNum = 1; generateType = 1; name = "Maze1";
+            commandNum = 1; generateType = 0; name = "Maze1";
 
             switch (commandNum)
             {
@@ -27,7 +28,7 @@ namespace MazeEx1
                         maze.CreateMaze(new RandomMazeMaker());
                     if (generateType == 1)
                         maze.CreateMaze(new DFSMazeMaker());
-                    maze.ToMazeString(maze.start, maze.mazeSize);
+                    Console.Write(maze.ToString());
                     Console.Read();
                     //MazeDataBase.AddMaze(Maze);
                     //mazeRetrieved = MazeDataBase.RetrieveMaze(name);
@@ -43,7 +44,7 @@ namespace MazeEx1
                     if (generateType == 1)
                         mazeRetrieved.Solve(new BestFSSolution());
                     Console.WriteLine(mazeRetrieved.name);
-                    Console.WriteLine(mazeRetrieved.ToMazeString(mazeRetrieved.start, mazeRetrieved.mazeSize));
+                    Console.WriteLine(mazeRetrieved.ToString());
                     Console.WriteLine(mazeRetrieved.start.location.i + " " + mazeRetrieved.start.location.j);
                     Console.WriteLine(mazeRetrieved.end);
                     break;

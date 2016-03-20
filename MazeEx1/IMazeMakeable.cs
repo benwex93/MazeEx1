@@ -8,6 +8,8 @@ namespace MazeEx1
 {
     interface IMazeMakeable
     {
-        void createMaze(Maze mazeToMake);
+        void CreateStart(Maze mazeToMake);
+        void CreateEnd(Maze mazeToMake);
+        void CreateMaze(Maze mazeToMake);
     }
 }

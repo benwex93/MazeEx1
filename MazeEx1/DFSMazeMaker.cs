@@ -8,23 +8,51 @@ namespace MazeEx1
 {
     class DFSMazeMaker:IMazeMakeable
     {
-        static Random randomNumberGenerator;
+        static Random randomNumberGenerator = new Random();
         int mazeSize;
         Node[,] mazeArray;
-        public void createMaze(Maze mazeToMake)
+        public void CreateMaze(Maze mazeToMake)
         {
             this.mazeSize = mazeToMake.mazeSize;
-            randomNumberGenerator = new Random();
+            mazeArray = new Node[mazeSize, mazeSize];
+            CreateStart(mazeToMake);
+            TraverveNodes(mazeToMake.start, mazeToMake.start.location.i, mazeToMake.start.location.j);
+            CreateEnd(mazeToMake);
+        }
+        public void CreateStart(Maze mazeToMake)
+        {
+            //randomNumberGenerator
             int i = randomNumberGenerator.Next(0, mazeToMake.mazeSize);
             int j = randomNumberGenerator.Next(0, mazeToMake.mazeSize);
 
-            mazeToMake.start = new Node(i, j, '*');
-            mazeArray = new Node[mazeSize, mazeSize];
+            mazeToMake.start = new Node(i, j, '0', 0);
+            mazeToMake.start.specialVal = '*';
             mazeArray[mazeToMake.start.location.i, mazeToMake.start.location.j] = mazeToMake.start;
-            traverveNodes(mazeToMake.start, mazeToMake.start.location.i, mazeToMake.start.location.j);
         }
-        public void traverveNodes(Node node, int i, int j)
+        public void CreateEnd(Maze mazeToMake)
         {
+            int greatestLengthFromStart = 0;
+            Node end = null;
+            for (int i = 0; i < mazeSize; i++)
+            {
+                for (int j = 0; j < mazeSize; j++)
+                {
+                    if (greatestLengthFromStart < mazeArray[i, j].lengthFromStart)
+                    {
+                        greatestLengthFromStart = mazeArray[i, j].lengthFromStart;
+                        end = mazeArray[i, j];
+                    }
+                }
+            }
+            if(end != null)
+            {
+                end.specialVal = '#';
+                mazeToMake.end = end;
+            }
+        }
+        public void TraverveNodes(Node node, int i, int j)
+        {
+            //if not at starting node
             List<int> directionsList = new List<int>();
             for (int directionCases = 0; directionCases < 4; directionCases++)
                 directionsList.Add(directionCases);
@@ -34,57 +62,57 @@ namespace MazeEx1
                 int randomIndex = randomNumberGenerator.Next(0, directionsList.Count);
                 switch (directionsList.ElementAt(randomIndex))
                 {
-                    //go up
+                    //go left
                     case 0:
                         if (i - 1 < 0) //if out of bounds
                             node.left = null;
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i - 1, j] == null) {
-                            mazeArray[i - 1, j] = new Node(i - 1, j, '0');
+                            mazeArray[i - 1, j] = new Node(i - 1, j, '0', node.lengthFromStart + 1);
                             node.left = mazeArray[i - 1, j];
-                            traverveNodes(mazeArray[i - 1, j], i - 1, j);
+                            TraverveNodes(mazeArray[i - 1, j], i - 1, j);
                         }
                         //otherwise reached already visited node
                         else { node.left = null; }
                         break;
-                    //go down
+                    //go right
                     case 1:
                         if (i + 1 >= mazeSize) //if out of bounds
                             node.right = null;
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i + 1, j] == null)
                         {
-                            mazeArray[i + 1, j] = new Node(i + 1, j, '0');
+                            mazeArray[i + 1, j] = new Node(i + 1, j, '0', node.lengthFromStart + 1);
                             node.right = mazeArray[i + 1, j];
-                            traverveNodes(mazeArray[i + 1, j], i + 1, j);
+                            TraverveNodes(mazeArray[i + 1, j], i + 1, j);
                         }
                         //otherwise reached already visited node
                         else { node.right = null; }
                         break;
-                    //go left
+                    //go up
                     case 2:
                         if (j - 1 < 0) //if out of bounds
                             node.up = null;
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i, j - 1] == null)
                         {
-                            mazeArray[i, j - 1] = new Node(i, j - 1, '0');
+                            mazeArray[i, j - 1] = new Node(i, j - 1, '0', node.lengthFromStart + 1);
                             node.up = mazeArray[i, j - 1];
-                            traverveNodes(mazeArray[i, j - 1], i, j - 1);
+                            TraverveNodes(mazeArray[i, j - 1], i, j - 1);
                         }
                         //otherwise reached already visited node
                         else { node.up = null; }
                         break;
-                    //go right
+                    //go down
                     case 3:
                         if (j + 1 >= mazeSize) //if out of bounds
                             node.down = null;
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i, j + 1] == null)
                         {
-                            mazeArray[i, j + 1] = new Node(i, j + 1, '0');
+                            mazeArray[i, j + 1] = new Node(i, j + 1, '0', node.lengthFromStart + 1);
                             node.down = mazeArray[i, j + 1];
-                            traverveNodes(mazeArray[i, j + 1], i, j + 1);
+                            TraverveNodes(mazeArray[i, j + 1], i, j + 1);
                         }
                         //otherwise reached already visited node
                         else { node.down = null; }

@@ -9,7 +9,7 @@ namespace MazeEx1
     class Maze : Printable
     {
         public Node start { get; set; }
-        public Node end { get; }
+        public Node end { get; set; }
         public string name { get; }
         public int mazeSize { get; }
         public ISolution mazeSolution { get; set; }
@@ -20,13 +20,17 @@ namespace MazeEx1
         }
         public void CreateMaze(IMazeMakeable makeType)
         {
-            makeType.createMaze(this);
+            makeType.CreateMaze(this);
         }
         public void Solve(ISolution solveType)
         {
             //if Maze has no solution yet of this type
             if(this.mazeSolution.GetType() == solveType.GetType() && mazeSolution == null)
                 solveType.SolveMaze(this);
+        }
+        public override string ToString()
+        {
+            return GetString(start, end, mazeSize);
         }
     }
 }
