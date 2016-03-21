@@ -10,13 +10,15 @@ namespace MazeEx1
     {
         char[,] visualMazeArray;
         int mazeSize;
-        public string GetString(Node start, Node end, int mazeSize)
+        CharVals mazeVals;
+        public string GetString(Node start, Node end, int mazeSize, CharVals mazeVals)
         {
             this.mazeSize = mazeSize;
+            this.mazeVals = mazeVals;
             visualMazeArray = new char[mazeSize * 2, mazeSize * 2];
             TraverveNodes(start, start.location.i * 2, start.location.j * 2);
-            visualMazeArray[start.location.i * 2, start.location.j * 2] = start.specialVal;
-            visualMazeArray[end.location.i * 2, end.location.j * 2] = end.specialVal;
+            visualMazeArray[start.location.i * 2, start.location.j * 2] = mazeVals.startValue;
+            visualMazeArray[end.location.i * 2, end.location.j * 2] = mazeVals.endValue;
             return GetStringFromArray();
         }
         public string GetStringFromArray()
@@ -26,17 +28,11 @@ namespace MazeEx1
             {
                 for (int row = 0; row < mazeSize * 2; row++)
                 {
+                    //if wall
                     if (visualMazeArray[col, row] == '\0')
-                        mazeString += "X";
-                    else if (visualMazeArray[col, row] == '*')
-                        mazeString += "S";
-                    else if (visualMazeArray[col, row] == '#')
-                        mazeString += "E";
-                    else if (visualMazeArray[col, row] == 'V')
-                        mazeString += "+";
+                        mazeString += mazeVals.wallValue;
                     else
-                        mazeString += " ";
-                    // mazeString +=(visualMazeArray[col, row]);
+                        mazeString +=(visualMazeArray[col, row]);
                 }
                 mazeString += "\n";
             }

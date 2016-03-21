@@ -12,54 +12,72 @@ namespace MazeEx1
         string name;
         int mazeSize;
         Node start;
+        char solvedPathValue;
+        char visitedNodeValue = 'V';
+
         public void SolveMaze(Maze mazeToSolve)
         {
             this.name = mazeToSolve.name;
             this.mazeSize = mazeToSolve.mazeSize;
             this.start = mazeToSolve.start;
-            TraverseNodes(mazeToSolve.start);
+            this.solvedPathValue = mazeToSolve.mazeVals.solValue;
+            TraverseNodes(mazeToSolve.start,mazeToSolve.end);
         }
-        public void TraverseNodes(Node start)
+        public void TraverseNodes(Node start, Node end)
         {
             Node currentNode = start;
-            start.value = 'V';
+            start.specialVal = visitedNodeValue;
             Queue nodesVisited = new Queue();
             nodesVisited.Enqueue(currentNode);
-            while(currentNode.specialVal != '#')
+            while(currentNode != end)
             {
                 if(currentNode.left != null)
                 {
-                    if(currentNode.left.value != 'V')
+                    if(currentNode.left.specialVal != visitedNodeValue)
                     {
-                        currentNode.left.value = 'V';
+                        currentNode.left.specialVal = visitedNodeValue;
+                        currentNode.left.prevNode = currentNode;
                         nodesVisited.Enqueue(currentNode.left);
                     }
                 }
                 if (currentNode.right != null)
                 {
-                    if (currentNode.right.value != 'V')
+                    if (currentNode.right.specialVal != visitedNodeValue)
                     {
-                        currentNode.right.value = 'V';
+                        currentNode.right.specialVal = visitedNodeValue;
+                        currentNode.right.prevNode = currentNode;
                         nodesVisited.Enqueue(currentNode.right);
                     }
                 }
                 if (currentNode.up != null)
                 {
-                    if (currentNode.up.value != 'V')
+                    if (currentNode.up.specialVal != visitedNodeValue)
                     {
-                        currentNode.up.value = 'V';
+                        currentNode.up.specialVal = visitedNodeValue;
+                        currentNode.up.prevNode = currentNode;
                         nodesVisited.Enqueue(currentNode.up);
                     }
                 }
                 if (currentNode.down != null)
                 {
-                    if (currentNode.down.value != 'V')
+                    if (currentNode.down.specialVal != visitedNodeValue)
                     {
-                        currentNode.down.value = 'V';
+                        currentNode.down.specialVal = visitedNodeValue;
+                        currentNode.down.prevNode = currentNode;
                         nodesVisited.Enqueue(currentNode.down);
                     }
                 }
                 currentNode = (Node)nodesVisited.Dequeue();
+            }
+            AssignSolutionToGraph(start, currentNode);
+        }
+        public void AssignSolutionToGraph(Node start, Node end)
+        {
+            Node currentNode = end;
+            while(currentNode != start)
+            {
+                currentNode.value = solvedPathValue;
+                currentNode = currentNode.prevNode;
             }
         }
     }

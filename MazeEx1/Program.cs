@@ -14,16 +14,17 @@ namespace MazeEx1
             int generateType;
             string name;
             //must be between 2 and 75
-            const int mazeSize = 65;
+            const int mazeSize = 26;
+            CharVals mazeVals = new CharVals('S','E','*',' ', '█');
             Maze mazeRetrieved;
 
             //get client input here
-            commandNum = 1; generateType = 0; name = "Maze1";
+            commandNum = 1; generateType = 1; name = "Maze1";
 
             switch (commandNum)
             {
                 case 1:
-                    Maze maze = new Maze(name, mazeSize);
+                    Maze maze = new Maze(name, mazeSize, mazeVals);
                     if (generateType == 0)
                         maze.CreateMaze(new RandomMazeMaker());
                     if (generateType == 1)

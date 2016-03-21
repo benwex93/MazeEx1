@@ -20,7 +20,10 @@ namespace MazeEx1
         public Node down { get; set; }
         public Location location { get; set; }
         public char value { get; set; }
+        //used for assigning start and end nodes and also for creating the branching off of the main path when creating the random maze
         public char specialVal { get; set; }
+        //used for calculating end so that it is far away from start
         public int lengthFromStart { get; set; }
+        public Node prevNode { get; set; }
     }
 }

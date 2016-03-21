@@ -13,10 +13,12 @@ namespace MazeEx1
         public string name { get; }
         public int mazeSize { get; }
         public ISolution mazeSolution { get; set; }
-        public Maze(string name, int mazeSize)
+        public CharVals mazeVals { get; set; }
+        public Maze(string name, int mazeSize, CharVals mazeVals)
         {
             this.name = name;
             this.mazeSize = mazeSize;
+            this.mazeVals = mazeVals;
         }
         public void CreateMaze(IMazeMakeable makeType)
         {
@@ -27,10 +29,13 @@ namespace MazeEx1
             //if Maze has no solution yet of this type
             if(mazeSolution == null)
                 solveType.SolveMaze(this);
+            //if Maze has no solution yet of this type
+            else if (mazeSolution.GetType() != solveType.GetType())
+                solveType.SolveMaze(this);
         }
         public override string ToString()
         {
-            return GetString(start, end, mazeSize);
+            return GetString(start, end, mazeSize, mazeVals);
         }
     }
 }

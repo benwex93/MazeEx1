@@ -11,9 +11,11 @@ namespace MazeEx1
         static Random randomNumberGenerator = new Random();
         int mazeSize;
         Node[,] mazeArray;
+        char pathValue;
         public void CreateMaze(Maze mazeToMake)
         {
             this.mazeSize = mazeToMake.mazeSize;
+            this.pathValue = mazeToMake.mazeVals.pathValue;
             mazeArray = new Node[mazeSize, mazeSize];
             CreateStart(mazeToMake);
             TraverveNodes(mazeToMake.start, mazeToMake.start.location.i, mazeToMake.start.location.j);
@@ -25,8 +27,8 @@ namespace MazeEx1
             int i = randomNumberGenerator.Next(0, mazeToMake.mazeSize);
             int j = randomNumberGenerator.Next(0, mazeToMake.mazeSize);
 
-            mazeToMake.start = new Node(i, j, '0', 0);
-            mazeToMake.start.specialVal = '*';
+            mazeToMake.start = new Node(i, j, mazeToMake.mazeVals.pathValue, 0);
+            mazeToMake.start.specialVal = mazeToMake.mazeVals.startValue;
             mazeArray[mazeToMake.start.location.i, mazeToMake.start.location.j] = mazeToMake.start;
         }
         public void CreateEnd(Maze mazeToMake)
@@ -46,7 +48,7 @@ namespace MazeEx1
             }
             if(end != null)
             {
-                end.specialVal = '#';
+                end.specialVal = mazeToMake.mazeVals.endValue;
                 mazeToMake.end = end;
             }
         }
@@ -68,7 +70,7 @@ namespace MazeEx1
                             node.left = null;
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i - 1, j] == null) {
-                            mazeArray[i - 1, j] = new Node(i - 1, j, '0', node.lengthFromStart + 1);
+                            mazeArray[i - 1, j] = new Node(i - 1, j, pathValue, node.lengthFromStart + 1);
                             node.left = mazeArray[i - 1, j];
                             TraverveNodes(mazeArray[i - 1, j], i - 1, j);
                         }
@@ -82,7 +84,7 @@ namespace MazeEx1
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i + 1, j] == null)
                         {
-                            mazeArray[i + 1, j] = new Node(i + 1, j, '0', node.lengthFromStart + 1);
+                            mazeArray[i + 1, j] = new Node(i + 1, j, pathValue, node.lengthFromStart + 1);
                             node.right = mazeArray[i + 1, j];
                             TraverveNodes(mazeArray[i + 1, j], i + 1, j);
                         }
@@ -96,7 +98,7 @@ namespace MazeEx1
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i, j - 1] == null)
                         {
-                            mazeArray[i, j - 1] = new Node(i, j - 1, '0', node.lengthFromStart + 1);
+                            mazeArray[i, j - 1] = new Node(i, j - 1, pathValue, node.lengthFromStart + 1);
                             node.up = mazeArray[i, j - 1];
                             TraverveNodes(mazeArray[i, j - 1], i, j - 1);
                         }
@@ -110,7 +112,7 @@ namespace MazeEx1
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i, j + 1] == null)
                         {
-                            mazeArray[i, j + 1] = new Node(i, j + 1, '0', node.lengthFromStart + 1);
+                            mazeArray[i, j + 1] = new Node(i, j + 1, pathValue, node.lengthFromStart + 1);
                             node.down = mazeArray[i, j + 1];
                             TraverveNodes(mazeArray[i, j + 1], i, j + 1);
                         }

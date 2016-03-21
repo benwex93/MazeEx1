@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BestFSSolution.cs" />
     <Compile Include="BreadthFSSolution.cs" />
+    <Compile Include="CharVals.cs" />
     <Compile Include="DFSMazeMaker.cs" />
     <Compile Include="IMazeMakeable.cs" />
     <Compile Include="ISolution.cs" />
