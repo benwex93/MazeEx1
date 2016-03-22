@@ -57,7 +57,7 @@ namespace MazeEx1
                 mazeToMake.end = end;
             }
         }
-        public void MakeStartEndPath(Node node, int i, int j)
+        public bool MakeStartEndPath(Node node, int i, int j)
         {
             //if not at starting node
             List<int> directionsList = new List<int>();
@@ -77,13 +77,17 @@ namespace MazeEx1
                         else if (mazeArray[i - 1, j] == null)
                         {
                             //end after making path of size mazesize*mazesize/2
-                            if (node.lengthFromStart + 1 >= (mazeSize * mazeSize) -1)
-                                return;
-                            mazeArray[i - 1, j] = new Node(i - 1, j, pathValue, node.lengthFromStart + 1);
-                            node.left = mazeArray[i - 1, j];
-                            node.left.specialVal = mainPathValue;
-                            MakeStartEndPath(mazeArray[i - 1, j], i - 1, j);
-                            return;
+                            if (node.lengthFromStart >= mazeSize)
+                                return true;
+                            else
+                            {
+                                mazeArray[i - 1, j] = new Node(i - 1, j, pathValue, node.lengthFromStart + 1);
+                                node.left = mazeArray[i - 1, j];
+                                node.left.specialVal = mainPathValue;
+                                if (MakeStartEndPath(mazeArray[i - 1, j], i - 1, j))
+                                    return true;
+                                mazeArray[i - 1, j] = null;
+                            }
                         }
                         //otherwise reached already visited node
                         else { node.left = null; }
@@ -95,13 +99,17 @@ namespace MazeEx1
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i + 1, j] == null)
                         {
-                            if (node.lengthFromStart + 1 >= (mazeSize * mazeSize) - 1)
-                                return;
-                            mazeArray[i + 1, j] = new Node(i + 1, j, pathValue, node.lengthFromStart + 1);
-                            node.right = mazeArray[i + 1, j];
-                            node.right.specialVal = mainPathValue;
-                            MakeStartEndPath(mazeArray[i + 1, j], i + 1, j);
-                            return;
+                            if (node.lengthFromStart >= mazeSize)
+                                return true;
+                            else
+                            {
+                                mazeArray[i + 1, j] = new Node(i + 1, j, pathValue, node.lengthFromStart + 1);
+                                node.right = mazeArray[i + 1, j];
+                                node.right.specialVal = mainPathValue;
+                                if(MakeStartEndPath(mazeArray[i + 1, j], i + 1, j)) //if led to final path
+                                    return true;
+                                mazeArray[i + 1, j] = null;
+                            }
                         }
                         //otherwise reached already visited node
                         else { node.right = null; }
@@ -113,13 +121,17 @@ namespace MazeEx1
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i, j - 1] == null)
                         {
-                            if (node.lengthFromStart + 1 >= (mazeSize * mazeSize) - 1)
-                                return;
-                            mazeArray[i, j - 1] = new Node(i, j - 1, pathValue, node.lengthFromStart + 1);
-                            node.up = mazeArray[i, j - 1];
-                            node.up.specialVal = mainPathValue;
-                            MakeStartEndPath(mazeArray[i, j - 1], i, j - 1);
-                            return;
+                            if (node.lengthFromStart >= mazeSize)
+                                return true;
+                            else
+                            {
+                                mazeArray[i, j - 1] = new Node(i, j - 1, pathValue, node.lengthFromStart + 1);
+                                node.up = mazeArray[i, j - 1];
+                                node.up.specialVal = mainPathValue;
+                                if (MakeStartEndPath(mazeArray[i, j - 1], i, j - 1))
+                                    return true;
+                                mazeArray[i, j - 1] = null;
+                            }
                         }
                         //otherwise reached already visited node
                         else { node.up = null; }
@@ -131,13 +143,17 @@ namespace MazeEx1
                         //if in bounds can safely run check on maze to see if found available node
                         else if (mazeArray[i, j + 1] == null)
                         {
-                            if (node.lengthFromStart + 1 >= (mazeSize * mazeSize) - 1)
-                                return;
-                            mazeArray[i, j + 1] = new Node(i, j + 1, pathValue, node.lengthFromStart + 1);
-                            node.down = mazeArray[i, j + 1];
-                            node.down.specialVal = mainPathValue;
-                            MakeStartEndPath(mazeArray[i, j + 1], i, j + 1);
-                            return;
+                            if (node.lengthFromStart >= mazeSize)
+                                return true;
+                            else
+                            {
+                                mazeArray[i, j + 1] = new Node(i, j + 1, pathValue, node.lengthFromStart + 1);
+                                node.down = mazeArray[i, j + 1];
+                                node.down.specialVal = mainPathValue;
+                                if (MakeStartEndPath(mazeArray[i, j + 1], i, j + 1))
+                                    return true;
+                                mazeArray[i, j + 1] = null;
+                            }
                         }
                         //otherwise reached already visited node
                         else { node.down = null; }
@@ -147,6 +163,8 @@ namespace MazeEx1
                 }
                 directionsList.RemoveAt(randomIndex);
             }
+            //else reached dead end
+            return false;
         }
         /// <summary>
         /// Traverses through original path node by node randomly exploring outward until it reaches itself again or a wall
