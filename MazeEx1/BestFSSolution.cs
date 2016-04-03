@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,20 +7,41 @@ using System.Threading.Tasks;
 
 namespace MazeEx1
 {
-    class BestFSSolution :  Printable , ISolution
+    class BestFSSolution : FirstSearcher
     {
-        string name;
-        int mazeSize;
-        Node start;
-        public BestFSSolution()
+        public override void Solve(Maze maze)
         {
-
+            GetMazeInfo(maze);
+            TraverseNodes(start, end);
+            maze.isSolved = true;
+            this.solutionString = maze.ToString();
+            this.solutionType = 1;
+            deleteSolutionFromMaze(maze);
         }
-        public void SolveMaze(Maze maze)
+        public void TraverseNodes(Node start, Node end)
         {
-            this.name = maze.name;
-            this.mazeSize = maze.mazeSize;
+            Node currentNode = start;
+            currentNode.setWeight(start);
+            Queue open = new Queue();
+            open.Enqueue(currentNode);
+            List<Node> nextBestNodeList = new List<Node>();
+            while (open.Count != 0)
+            {
+                currentNode = (Node) open.Dequeue();
+                if (currentNode.specialVal == end.specialVal)
+                {
+                    AssignSolutionToGraph(start, currentNode, solvedPathValue);
+                    break;
+                }
+                currentNode.specialVal = visitedNodeValue;
+                GetNodeSuccessors(currentNode, nextBestNodeList);
+                nextBestNodeList.Sort((x, y) => x.weight.CompareTo(y.weight));
+                foreach (Node bestNode in nextBestNodeList)
+                {
+                   open.Enqueue(bestNode);
+                }
+                nextBestNodeList.Clear();
+            }            
         }
-
     }
 }

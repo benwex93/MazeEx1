@@ -203,7 +203,7 @@ namespace MazeEx1
                                         else if (mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j] == null)
                                         {
                                             mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j]
-                                                = new Node(nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j, pathValue, 0);
+                                                = new Node(nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j, pathValue, nodeToBranchOut.lengthFromStart + 1);
                                             nodeToBranchOut.left = mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j];
                                             nodeToBranchOut = nodeToBranchOut.left;
                                             //can explore all directions now
@@ -225,7 +225,7 @@ namespace MazeEx1
                                         else if (mazeArray[nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j] == null)
                                         {
                                             mazeArray[nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j]
-                                                = new Node(nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j, pathValue, 0);
+                                                = new Node(nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j, pathValue, nodeToBranchOut.lengthFromStart + 1);
                                             nodeToBranchOut.right = mazeArray[nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j];
                                             nodeToBranchOut = nodeToBranchOut.right;
                                             directionsList.Clear();
@@ -245,7 +245,7 @@ namespace MazeEx1
                                         else if (mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1] == null)
                                         {
                                             mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1]
-                                                = new Node(nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1, pathValue, 0);
+                                                = new Node(nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1, pathValue, nodeToBranchOut.lengthFromStart + 1);
                                             nodeToBranchOut.up = mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1];
                                             nodeToBranchOut = nodeToBranchOut.up;
                                             directionsList.Clear();
@@ -265,7 +265,7 @@ namespace MazeEx1
                                         else if (mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1] == null)
                                         {
                                             mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1]
-                                                = new Node(nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1, pathValue, 0);
+                                                = new Node(nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1, pathValue, nodeToBranchOut.lengthFromStart + 1);
                                             nodeToBranchOut.down = mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1];
                                             nodeToBranchOut = nodeToBranchOut.down;
                                             directionsList.Clear();

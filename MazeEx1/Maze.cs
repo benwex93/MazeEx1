@@ -12,8 +12,8 @@ namespace MazeEx1
         public Node end { get; set; }
         public string name { get; }
         public int mazeSize { get; }
-        public ISolution mazeSolution { get; set; }
         public CharVals mazeVals { get; set; }
+        public bool isSolved { get; set; }
         public Maze(string name, int mazeSize, CharVals mazeVals)
         {
             this.name = name;
@@ -24,14 +24,9 @@ namespace MazeEx1
         {
             makeType.CreateMaze(this);
         }
-        public void Solve(ISolution solveType)
+        public void SolveMaze(ISolution solveType)
         {
-            //if Maze has no solution yet of this type
-            if(mazeSolution == null)
-                solveType.SolveMaze(this);
-            //if Maze has no solution yet of this type
-            else if (mazeSolution.GetType() != solveType.GetType())
-                solveType.SolveMaze(this);
+            solveType.Solve(this);
         }
         public override string ToString()
         {

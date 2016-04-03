@@ -29,10 +29,10 @@ namespace MazeEx1
                 for (int row = 0; row < mazeSize * 2; row++)
                 {
                     //if wall
-                    if (visualMazeArray[col, row] == '\0')
+                    if (visualMazeArray[row, col] == '\0')
                         mazeString += mazeVals.wallValue;
                     else
-                        mazeString +=(visualMazeArray[col, row]);
+                        mazeString +=(visualMazeArray[row, col]);
                 }
                 mazeString += "\n";
             }
