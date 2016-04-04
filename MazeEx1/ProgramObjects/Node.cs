@@ -8,9 +8,9 @@ namespace MazeEx1
 {
     class Node
     {
-        public Node(int i, int j, char val, int lenFromStart)
+        public Node(int col, int row, char val, int lenFromStart)
         {
-            this.location = new Location(i,j);
+            this.location = new Location(col, row);
             this.value = val;
             this.lengthFromStart = lenFromStart;
         }
@@ -29,7 +29,14 @@ namespace MazeEx1
         public int lengthFromStart { get; set; }
         public void setWeight(Node start)
         {
-            this.weight = Math.Abs(this.location.i - start.location.i) + Math.Abs(this.location.j - start.location.j);
+            this.weight = Math.Abs(this.location.col - start.location.col) + Math.Abs(this.location.row - start.location.row);
+        }
+        public Node Clone()
+        {
+            Node nodeClone = new Node(this.location.col, this.location.row, this.value, this.lengthFromStart);
+            nodeClone.weight = this.weight;
+            nodeClone.specialVal = this.specialVal;
+            return nodeClone;
         }
     }
 }

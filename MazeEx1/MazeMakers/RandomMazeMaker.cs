@@ -25,28 +25,28 @@ namespace MazeEx1
         public void CreateStart(Maze mazeToMake)
         {
             //randomNumberGenerator
-            int i = randomNumberGenerator.Next(0, mazeToMake.mazeSize);
-            int j = randomNumberGenerator.Next(0, mazeToMake.mazeSize);
+            int col = randomNumberGenerator.Next(0, mazeToMake.mazeSize);
+            int row = randomNumberGenerator.Next(0, mazeToMake.mazeSize);
 
-            mazeToMake.start = new Node(i, j, pathValue, 0);
+            mazeToMake.start = new Node(col, row, pathValue, 0);
             mazeToMake.start.specialVal = mazeToMake.mazeVals.startValue;
-            mazeArray[mazeToMake.start.location.i, mazeToMake.start.location.j] = mazeToMake.start;
+            mazeArray[mazeToMake.start.location.col, mazeToMake.start.location.row] = mazeToMake.start;
         }
         public void CreateEnd(Maze mazeToMake)
         {
-            MakeStartEndPath(mazeToMake.start, mazeToMake.start.location.i, mazeToMake.start.location.j);
+            MakeStartEndPath(mazeToMake.start, mazeToMake.start.location.col, mazeToMake.start.location.row);
             int greatestLengthFromStart = 0;
             Node end = null;
-            for (int i = 0; i < mazeSize; i++)
+            for (int col = 0; col < mazeSize; col++)
             {
-                for (int j = 0; j < mazeSize; j++)
+                for (int row = 0; row < mazeSize; row++)
                 {
-                    if (mazeArray[i, j] != null)
+                    if (mazeArray[col, row] != null)
                     {
-                        if (greatestLengthFromStart < mazeArray[i, j].lengthFromStart)
+                        if (greatestLengthFromStart < mazeArray[col, row].lengthFromStart)
                         {
-                            greatestLengthFromStart = mazeArray[i, j].lengthFromStart;
-                            end = mazeArray[i, j];
+                            greatestLengthFromStart = mazeArray[col, row].lengthFromStart;
+                            end = mazeArray[col, row];
                         }
                     }
                 }
@@ -57,7 +57,7 @@ namespace MazeEx1
                 mazeToMake.end = end;
             }
         }
-        public bool MakeStartEndPath(Node node, int i, int j)
+        public bool MakeStartEndPath(Node node, int col, int row)
         {
             //if not at starting node
             List<int> directionsList = new List<int>();
@@ -71,22 +71,22 @@ namespace MazeEx1
                 {
                     //go left
                     case 0:
-                        if (i - 1 < 0) //if out of bounds
+                        if (col - 1 < 0) //if out of bounds
                             node.left = null;
                         //if in bounds can safely run check on maze to see if found available node
-                        else if (mazeArray[i - 1, j] == null)
+                        else if (mazeArray[col - 1, row] == null)
                         {
                             //end after making path of size mazesize*mazesize/2
                             if (node.lengthFromStart >= mazeSize)
                                 return true;
                             else
                             {
-                                mazeArray[i - 1, j] = new Node(i - 1, j, pathValue, node.lengthFromStart + 1);
-                                node.left = mazeArray[i - 1, j];
+                                mazeArray[col - 1, row] = new Node(col - 1, row, pathValue, node.lengthFromStart + 1);
+                                node.left = mazeArray[col - 1, row];
                                 node.left.specialVal = mainPathValue;
-                                if (MakeStartEndPath(mazeArray[i - 1, j], i - 1, j))
+                                if (MakeStartEndPath(mazeArray[col - 1, row], col - 1, row))
                                     return true;
-                                mazeArray[i - 1, j] = null;
+                                mazeArray[col - 1, row] = null;
                             }
                         }
                         //otherwise reached already visited node
@@ -94,21 +94,21 @@ namespace MazeEx1
                         break;
                     //go right
                     case 1:
-                        if (i + 1 >= mazeSize) //if out of bounds
+                        if (col + 1 >= mazeSize) //if out of bounds
                             node.right = null;
                         //if in bounds can safely run check on maze to see if found available node
-                        else if (mazeArray[i + 1, j] == null)
+                        else if (mazeArray[col + 1, row] == null)
                         {
                             if (node.lengthFromStart >= mazeSize)
                                 return true;
                             else
                             {
-                                mazeArray[i + 1, j] = new Node(i + 1, j, pathValue, node.lengthFromStart + 1);
-                                node.right = mazeArray[i + 1, j];
+                                mazeArray[col + 1, row] = new Node(col + 1, row, pathValue, node.lengthFromStart + 1);
+                                node.right = mazeArray[col + 1, row];
                                 node.right.specialVal = mainPathValue;
-                                if(MakeStartEndPath(mazeArray[i + 1, j], i + 1, j)) //if led to final path
+                                if(MakeStartEndPath(mazeArray[col + 1, row], col + 1, row)) //if led to final path
                                     return true;
-                                mazeArray[i + 1, j] = null;
+                                mazeArray[col + 1, row] = null;
                             }
                         }
                         //otherwise reached already visited node
@@ -116,21 +116,21 @@ namespace MazeEx1
                         break;
                     //go up
                     case 2:
-                        if (j - 1 < 0) //if out of bounds
+                        if (row - 1 < 0) //if out of bounds
                             node.up = null;
                         //if in bounds can safely run check on maze to see if found available node
-                        else if (mazeArray[i, j - 1] == null)
+                        else if (mazeArray[col, row - 1] == null)
                         {
                             if (node.lengthFromStart >= mazeSize)
                                 return true;
                             else
                             {
-                                mazeArray[i, j - 1] = new Node(i, j - 1, pathValue, node.lengthFromStart + 1);
-                                node.up = mazeArray[i, j - 1];
+                                mazeArray[col, row - 1] = new Node(col, row - 1, pathValue, node.lengthFromStart + 1);
+                                node.up = mazeArray[col, row - 1];
                                 node.up.specialVal = mainPathValue;
-                                if (MakeStartEndPath(mazeArray[i, j - 1], i, j - 1))
+                                if (MakeStartEndPath(mazeArray[col, row - 1], col, row - 1))
                                     return true;
-                                mazeArray[i, j - 1] = null;
+                                mazeArray[col, row - 1] = null;
                             }
                         }
                         //otherwise reached already visited node
@@ -138,21 +138,21 @@ namespace MazeEx1
                         break;
                     //go down
                     case 3:
-                        if (j + 1 >= mazeSize) //if out of bounds
+                        if (row + 1 >= mazeSize) //if out of bounds
                             node.down = null;
                         //if in bounds can safely run check on maze to see if found available node
-                        else if (mazeArray[i, j + 1] == null)
+                        else if (mazeArray[col, row + 1] == null)
                         {
                             if (node.lengthFromStart >= mazeSize)
                                 return true;
                             else
                             {
-                                mazeArray[i, j + 1] = new Node(i, j + 1, pathValue, node.lengthFromStart + 1);
-                                node.down = mazeArray[i, j + 1];
+                                mazeArray[col, row + 1] = new Node(col, row + 1, pathValue, node.lengthFromStart + 1);
+                                node.down = mazeArray[col, row + 1];
                                 node.down.specialVal = mainPathValue;
-                                if (MakeStartEndPath(mazeArray[i, j + 1], i, j + 1))
+                                if (MakeStartEndPath(mazeArray[col, row + 1], col, row + 1))
                                     return true;
-                                mazeArray[i, j + 1] = null;
+                                mazeArray[col, row + 1] = null;
                             }
                         }
                         //otherwise reached already visited node
@@ -172,16 +172,16 @@ namespace MazeEx1
         public void RandomizeRemainingNodes()
         {
             Node nodeToBranchOut;
-            for (int i = 0; i < mazeSize; i++)
+            for (int col = 0; col < mazeSize; col++)
             {
-                for (int j = 0; j < mazeSize; j++)
+                for (int row = 0; row < mazeSize; row++)
                 {
-                    if (mazeArray[i, j] != null)
+                    if (mazeArray[col, row] != null)
                     {
                         //if found one of the nodes on the main path
-                        if (mazeArray[i, j].specialVal == mainPathValue)
+                        if (mazeArray[col, row].specialVal == mainPathValue)
                         {
-                            nodeToBranchOut = mazeArray[i, j];
+                            nodeToBranchOut = mazeArray[col, row];
                             //makes list so it can loop through all direction in random order
                             List<int> directionsList = new List<int>();
                             for (int directionCases = 0; directionCases < 4; directionCases++)
@@ -194,17 +194,17 @@ namespace MazeEx1
                                 {
                                     //go left
                                     case 0:
-                                        if (nodeToBranchOut.location.i - 1 < 0)
+                                        if (nodeToBranchOut.location.col - 1 < 0)
                                         { //if out of bounds removes direction from possible direction list
                                             nodeToBranchOut.left = null;
                                             directionsList.RemoveAt(randomIndex);
                                         }
                                         //if node to left is null, initializes it and explores it
-                                        else if (mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j] == null)
+                                        else if (mazeArray[nodeToBranchOut.location.col - 1, nodeToBranchOut.location.row] == null)
                                         {
-                                            mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j]
-                                                = new Node(nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j, pathValue, nodeToBranchOut.lengthFromStart + 1);
-                                            nodeToBranchOut.left = mazeArray[nodeToBranchOut.location.i - 1, nodeToBranchOut.location.j];
+                                            mazeArray[nodeToBranchOut.location.col - 1, nodeToBranchOut.location.row]
+                                                = new Node(nodeToBranchOut.location.col - 1, nodeToBranchOut.location.row, pathValue, nodeToBranchOut.lengthFromStart + 1);
+                                            nodeToBranchOut.left = mazeArray[nodeToBranchOut.location.col - 1, nodeToBranchOut.location.row];
                                             nodeToBranchOut = nodeToBranchOut.left;
                                             //can explore all directions now
                                             directionsList.Clear();
@@ -217,16 +217,16 @@ namespace MazeEx1
                                         break;
                                     //go right
                                     case 1:
-                                        if (nodeToBranchOut.location.i + 1 >= mazeSize)  { //if out of bounds
+                                        if (nodeToBranchOut.location.col + 1 >= mazeSize)  { //if out of bounds
                                             nodeToBranchOut.right = null;
                                             directionsList.RemoveAt(randomIndex);
                                         }
                                         //if node from main path allow it to connect to other nodes
-                                        else if (mazeArray[nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j] == null)
+                                        else if (mazeArray[nodeToBranchOut.location.col + 1, nodeToBranchOut.location.row] == null)
                                         {
-                                            mazeArray[nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j]
-                                                = new Node(nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j, pathValue, nodeToBranchOut.lengthFromStart + 1);
-                                            nodeToBranchOut.right = mazeArray[nodeToBranchOut.location.i + 1, nodeToBranchOut.location.j];
+                                            mazeArray[nodeToBranchOut.location.col + 1, nodeToBranchOut.location.row]
+                                                = new Node(nodeToBranchOut.location.col + 1, nodeToBranchOut.location.row, pathValue, nodeToBranchOut.lengthFromStart + 1);
+                                            nodeToBranchOut.right = mazeArray[nodeToBranchOut.location.col + 1, nodeToBranchOut.location.row];
                                             nodeToBranchOut = nodeToBranchOut.right;
                                             directionsList.Clear();
                                             for (int directionCases = 0; directionCases < 4; directionCases++)
@@ -237,16 +237,16 @@ namespace MazeEx1
                                         break;
                                     //go up
                                     case 2:
-                                        if (nodeToBranchOut.location.j - 1 < 0)  { //if out of bounds
+                                        if (nodeToBranchOut.location.row - 1 < 0)  { //if out of bounds
                                             nodeToBranchOut.up = null;
                                             directionsList.RemoveAt(randomIndex);
                                         }
                                         //if node from main path allow it to connect to other nodes
-                                        else if (mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1] == null)
+                                        else if (mazeArray[nodeToBranchOut.location.col, nodeToBranchOut.location.row - 1] == null)
                                         {
-                                            mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1]
-                                                = new Node(nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1, pathValue, nodeToBranchOut.lengthFromStart + 1);
-                                            nodeToBranchOut.up = mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j - 1];
+                                            mazeArray[nodeToBranchOut.location.col, nodeToBranchOut.location.row - 1]
+                                                = new Node(nodeToBranchOut.location.col, nodeToBranchOut.location.row - 1, pathValue, nodeToBranchOut.lengthFromStart + 1);
+                                            nodeToBranchOut.up = mazeArray[nodeToBranchOut.location.col, nodeToBranchOut.location.row - 1];
                                             nodeToBranchOut = nodeToBranchOut.up;
                                             directionsList.Clear();
                                             for (int directionCases = 0; directionCases < 4; directionCases++)
@@ -257,16 +257,16 @@ namespace MazeEx1
                                         break;
                                     //go down
                                     case 3:
-                                        if (nodeToBranchOut.location.j + 1 >= mazeSize) {  //if out of bounds
+                                        if (nodeToBranchOut.location.row + 1 >= mazeSize) {  //if out of bounds
                                             nodeToBranchOut.down = null;
                                             directionsList.RemoveAt(randomIndex);
                                         }
                                         //if node from main path allow it to connect to other nodes
-                                        else if (mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1] == null)
+                                        else if (mazeArray[nodeToBranchOut.location.col, nodeToBranchOut.location.row + 1] == null)
                                         {
-                                            mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1]
-                                                = new Node(nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1, pathValue, nodeToBranchOut.lengthFromStart + 1);
-                                            nodeToBranchOut.down = mazeArray[nodeToBranchOut.location.i, nodeToBranchOut.location.j + 1];
+                                            mazeArray[nodeToBranchOut.location.col, nodeToBranchOut.location.row + 1]
+                                                = new Node(nodeToBranchOut.location.col, nodeToBranchOut.location.row + 1, pathValue, nodeToBranchOut.lengthFromStart + 1);
+                                            nodeToBranchOut.down = mazeArray[nodeToBranchOut.location.col, nodeToBranchOut.location.row + 1];
                                             nodeToBranchOut = nodeToBranchOut.down;
                                             directionsList.Clear();
                                             for (int directionCases = 0; directionCases < 4; directionCases++)

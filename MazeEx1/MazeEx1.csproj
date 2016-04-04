@@ -44,25 +44,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BestFSSolution.cs" />
-    <Compile Include="BreadthFSSolution.cs" />
-    <Compile Include="CharVals.cs" />
-    <Compile Include="DFSMazeMaker.cs" />
-    <Compile Include="IMazeMakeable.cs" />
-    <Compile Include="ISolution.cs" />
-    <Compile Include="Location.cs" />
-    <Compile Include="Maze.cs" />
-    <Compile Include="MazeDataBase.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="Printable.cs" />
+    <Compile Include="MazeSolvers\BestFSSolution.cs" />
+    <Compile Include="MazeSolvers\BreadthFSSolution.cs" />
+    <Compile Include="ProgramObjects\CharVals.cs" />
+    <Compile Include="MazeMakers\DFSMazeMaker.cs" />
+    <Compile Include="ProgramObjects\Game.cs" />
+    <Compile Include="DataBases\GameDataBase.cs" />
+    <Compile Include="MazeMakers\IMazeMakeable.cs" />
+    <Compile Include="MazeSolvers\ISolution.cs" />
+    <Compile Include="ProgramObjects\Location.cs" />
+    <Compile Include="ProgramObjects\Maze.cs" />
+    <Compile Include="DataBases\MazeDataBase.cs" />
+    <Compile Include="DataClasses\MazeDataClass.cs" />
+    <Compile Include="DataClasses\MultiplayerDataClass.cs" />
+    <Compile Include="ProgramObjects\Node.cs" />
+    <Compile Include="DataClasses\NodeDataClass.cs" />
+    <Compile Include="ProgramObjects\Printable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomMazeMaker.cs" />
-    <Compile Include="FirstSearcher.cs" />
+    <Compile Include="MazeMakers\RandomMazeMaker.cs" />
+    <Compile Include="MazeSolvers\FirstSearcher.cs" />
+    <Compile Include="DataClasses\SolutionDataClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

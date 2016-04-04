@@ -15,8 +15,8 @@ namespace MazeEx1
             TraverseNodes(start, end);
             maze.isSolved = true;
             this.solutionString = maze.ToString();
-            this.solutionType = 0;
-            deleteSolutionFromMaze(maze);
+            this.start = maze.start;
+            this.end = maze.end;
         }
         public void TraverseNodes(Node start, Node end)
         {
@@ -28,7 +28,6 @@ namespace MazeEx1
             while (currentNode.specialVal != end.specialVal)
             {
                 GetNodeSuccessors(currentNode, nextNodeList);
-
                 foreach (Node bestNode in nextNodeList)
                     open.Enqueue(bestNode);
                 currentNode = (Node)open.Dequeue();

@@ -9,7 +9,6 @@ namespace MazeEx1
     class FirstSearcher : ISolution
     {
         int mazeSize;
-        protected Node start, end;
         protected char solvedPathValue;
         protected char visitedNodeValue = 'V';
 

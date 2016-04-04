@@ -15,8 +15,8 @@ namespace MazeEx1
             TraverseNodes(start, end);
             maze.isSolved = true;
             this.solutionString = maze.ToString();
-            this.solutionType = 1;
-            deleteSolutionFromMaze(maze);
+            this.start = maze.start;
+            this.end = maze.end;
         }
         public void TraverseNodes(Node start, Node end)
         {

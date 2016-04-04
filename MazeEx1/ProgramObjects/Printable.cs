@@ -16,9 +16,9 @@ namespace MazeEx1
             this.mazeSize = mazeSize;
             this.mazeVals = mazeVals;
             visualMazeArray = new char[mazeSize * 2, mazeSize * 2];
-            TraverveNodes(start, start.location.i * 2, start.location.j * 2);
-            visualMazeArray[start.location.i * 2, start.location.j * 2] = mazeVals.startValue;
-            visualMazeArray[end.location.i * 2, end.location.j * 2] = mazeVals.endValue;
+            TraverveNodes(start, start.location.col * 2, start.location.row * 2);
+            visualMazeArray[start.location.col * 2, start.location.row * 2] = mazeVals.startValue;
+            visualMazeArray[end.location.col * 2, end.location.row * 2] = mazeVals.endValue;
             return GetStringFromArray();
         }
         public string GetStringFromArray()
@@ -38,35 +38,35 @@ namespace MazeEx1
             }
             return mazeString;
         }
-        public void TraverveNodes(Node node, int i, int j)
+        public void TraverveNodes(Node node, int col, int row)
         {
             //go left
             if (node.left != null)
             {
-                visualMazeArray[i - 1, j] = node.left.value;
-                visualMazeArray[i - 2, j] = node.left.value;
-                TraverveNodes(node.left, i-2, j);
+                visualMazeArray[col - 1, row] = node.left.value;
+                visualMazeArray[col - 2, row] = node.left.value;
+                TraverveNodes(node.left, col-2, row);
             }
             //go right
             if (node.right != null)
             {
-                visualMazeArray[i + 1, j] = node.right.value;
-                visualMazeArray[i + 2, j] = node.right.value;
-                TraverveNodes(node.right, i + 2, j);
+                visualMazeArray[col + 1, row] = node.right.value;
+                visualMazeArray[col + 2, row] = node.right.value;
+                TraverveNodes(node.right, col + 2, row);
             }
             //go up
             if (node.up != null)
             {
-                visualMazeArray[i, j - 1] = node.up.value;
-                visualMazeArray[i, j - 2] = node.up.value;
-                TraverveNodes(node.up, i, j - 2);
+                visualMazeArray[col, row - 1] = node.up.value;
+                visualMazeArray[col, row - 2] = node.up.value;
+                TraverveNodes(node.up, col, row - 2);
             }
             //go down
             if (node.down != null)
             {
-                visualMazeArray[i, j + 1] = node.down.value;
-                visualMazeArray[i, j + 2] = node.down.value;
-                TraverveNodes(node.down, i, j + 2);
+                visualMazeArray[col, row + 1] = node.down.value;
+                visualMazeArray[col, row + 2] = node.down.value;
+                TraverveNodes(node.down, col, row + 2);
             }
         }
     }
