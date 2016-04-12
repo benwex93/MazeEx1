@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace MazeEx1
 {
-    //
     class Maze : GraphDFSPrintable
     {
         //maze class

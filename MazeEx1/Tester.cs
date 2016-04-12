@@ -14,7 +14,7 @@ namespace MazeEx1
             int generateType, solveType;
             string name;
             //must be between 2 and 75
-            const int mazeSize = 35;
+            const int mazeSize = 3;
             CharVals mazeVals = new CharVals('S', 'E', '*', ' ', '█');
 
             //get client input here

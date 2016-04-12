@@ -58,7 +58,7 @@ namespace MazeEx1
         public static void Multiplayer(string name, int type)
         {
             Game game = GDB.RetrieveGame(name);
-            if (game == null) //player 23
+            if (game == null) 
             {
                 game = new Game(name, mazeSize, mazeVals);
                 GDB.AddGame(game);
