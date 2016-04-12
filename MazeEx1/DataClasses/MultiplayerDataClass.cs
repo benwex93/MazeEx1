@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MazeEx1
+﻿namespace MazeEx1
 {
-    class MultiplayerDataClass
+    class MultiplayerDataClass : IDataClass
     {
         public string Name { get; set; }
         public string MazeName { get; set; }
         public MazeDataClass You { get; set; }
         public MazeDataClass Other { get; set; }
+        /// <summary>
+        /// Loads up data class which will serve for easy serialization
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="mazeName"></param>
+        /// <param name="you"></param>
+        /// <param name="other"></param>
         public MultiplayerDataClass(string name, string mazeName, MazeDataClass you, MazeDataClass other)
         {
             this.Name = name;

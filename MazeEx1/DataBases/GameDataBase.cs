@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace MazeEx1
 {
@@ -10,17 +6,26 @@ namespace MazeEx1
     {
         //creates game list so that playes can meet up for a certain game
         static List<Game> gameList;
-        //constructor that creates a new list of games
+        /// <summary>
+        /// constructor that creates a new list of games
+        /// </summary>
         public GameDataBase()
         {
             gameList = new List<Game>();
         }
-        //adds a new game to list. Called by first player to connect
+        /// <summary>
+        /// adds a new game to list. Called by first player to connect
+        /// </summary>
+        /// <param name="gameToAdd"></param>
         public void AddGame(Game gameToAdd)
         {
             gameList.Add(gameToAdd);
         }
-        //retrieves a game if it's already been created. Called by second player to connect
+        /// <summary>
+        /// retrieves a game if it's already been created. Called by second player to connect
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Game RetrieveGame(string name)
         {
             foreach (Game game in gameList)

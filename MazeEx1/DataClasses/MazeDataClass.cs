@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-
-namespace MazeEx1
+﻿namespace MazeEx1
 {
-    class MazeDataClass
+    class MazeDataClass : IDataClass
     {
         public string Name { get; set; }
         public string Maze { get; set; }
         public NodeDataClass Start { get; set; }
         public NodeDataClass End { get; set; }
+        /// <summary>
+        /// Loads up data class which will serve for easy serialization
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="mazeString"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
         public MazeDataClass(string name, string mazeString, NodeDataClass start, NodeDataClass end)
         {
             this.Name = name;

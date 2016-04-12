@@ -6,11 +6,21 @@ using System.Threading.Tasks;
 
 namespace MazeEx1
 {
-    abstract class Printable
+    abstract class GraphDFSPrintable
     {
+        //class for printing graphs that are printable using dfs (i.e. acyclic)
+        //placing it in a char array and then saving that char array as a string
         char[,] visualMazeArray;
         int mazeSize;
         CharVals mazeVals;
+        /// <summary>
+        /// gets printable graph's info
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="mazeSize"></param>
+        /// <param name="mazeVals"></param>
+        /// <returns></returns>
         public string GetString(Node start, Node end, int mazeSize, CharVals mazeVals)
         {
             this.mazeSize = mazeSize;
@@ -21,6 +31,10 @@ namespace MazeEx1
             visualMazeArray[end.location.col * 2, end.location.row * 2] = mazeVals.endValue;
             return GetStringFromArray();
         }
+        /// <summary>
+        /// turns graph into string representation
+        /// </summary>
+        /// <returns></returns>
         public string GetStringFromArray()
         {
             string mazeString = "";
@@ -38,6 +52,12 @@ namespace MazeEx1
             }
             return mazeString;
         }
+        /// <summary>
+        /// traverses nodes and places their char values in a char array
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="col"></param>
+        /// <param name="row"></param>
         public void TraverveNodes(Node node, int col, int row)
         {
             //go left

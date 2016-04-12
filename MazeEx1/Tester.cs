@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MazeEx1
 {
-    class Program
+    class Tester
     {
         static void Main(string[] args)
         {
@@ -14,7 +14,7 @@ namespace MazeEx1
             int generateType, solveType;
             string name;
             //must be between 2 and 75
-            const int mazeSize = 5;
+            const int mazeSize = 35;
             CharVals mazeVals = new CharVals('S', 'E', '*', ' ', '█');
 
             //get client input here
@@ -31,12 +31,12 @@ namespace MazeEx1
                     case 1:
                         Console.WriteLine("Please Enter Name of Maze To Create");
                         name = Console.ReadLine();
-                        Console.WriteLine("Please Type of Solution");
+                        Console.WriteLine("Please Enter Type of Maker: 0 - Random, 1 - DFS");
                         generateType = Int32.Parse(Console.ReadLine());
                         Maze maze = new Maze(name, mazeSize, mazeVals);
                         if (generateType == 0)
                             maze.CreateMaze(new RandomMazeMaker());
-                        if (generateType == 1)
+                        else if (generateType == 1)
                             maze.CreateMaze(new DFSMazeMaker());
                         MDB.AddMaze(maze);
                         MazeDataClass MazeDC = new MazeDataClass(maze.name, maze.ToString(), new NodeDataClass(maze.start.location.row, maze.start.location.col),
@@ -44,7 +44,7 @@ namespace MazeEx1
                         Console.Write(MazeDC);
                         break;
                     case 2:
-                        Console.WriteLine("Please Enter Name of Maze To Solve");
+                        Console.WriteLine("Please Enter Name of Maze To Solve: 0 - Random, 1 - DFS");
                         //tries to see if solution already exists
                         name = Console.ReadLine();
                         Console.WriteLine("Please Type of Solution");
@@ -107,9 +107,28 @@ namespace MazeEx1
                         }
                         break;
                     case 4:
-                        Console.WriteLine("Please Enter Your Move");
+                        // Console.WriteLine("Please Enter Your Move");
+                        //tries to see if solution already exists
+                        //name = Console.ReadLine();
+                        Console.WriteLine("Please Enter Name of Maze To Solve");
                         //tries to see if solution already exists
                         name = Console.ReadLine();
+                        Maze test = MDB.RetrieveMaze(name);
+                        Maze test2 = test.Clone();
+                        if (test == null)
+                            Console.WriteLine("Maze Does Not Exist or Has Not Been Solved");
+                        else 
+                        {
+                            BreadthFSSolution breadthFS = new BreadthFSSolution();
+                            test.SolveMaze(breadthFS);
+                            MDB.SaveSolToFile(breadthFS);
+                            Console.WriteLine(breadthFS.solutionString);
+
+                            BestFSSolution bestFS = new BestFSSolution();
+                            test2.SolveMaze(bestFS);
+                            MDB.SaveSolToFile(bestFS);
+                            Console.WriteLine(bestFS.solutionString);
+                        }
                         break;
                     default:
                         break;

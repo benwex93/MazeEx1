@@ -8,6 +8,7 @@ namespace MazeEx1
 {
     class Location
     {
+        //stores location of node in array
         public int col { get;}
         public int row { get;}
         public Location(int col, int row)

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MazeEx1
+﻿namespace MazeEx1
 {
-    class NodeDataClass
+    class NodeDataClass : IDataClass
     {
         public int Row { get; set; }
         public int Col { get; set; }
+        /// <summary>
+        /// Loads up data class which will serve for easy serialization
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
         public NodeDataClass(int row, int col)
         {
             this.Row = row * 2;

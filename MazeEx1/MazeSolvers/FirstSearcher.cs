@@ -8,23 +8,46 @@ namespace MazeEx1
 {
     class FirstSearcher : ISolution
     {
-        int mazeSize;
         protected char solvedPathValue;
-        protected char visitedNodeValue = 'V';
-
+        protected char visitedNodeValue;
+        /// <summary>
+        /// Gets maze info for all first searchers
+        /// </summary>
+        /// <param name="mazeToSolve"></param>
         public void GetMazeInfo(Maze mazeToSolve)
         {
             this.name = mazeToSolve.name;
-            this.mazeSize = mazeToSolve.mazeSize;
             this.start = mazeToSolve.start;
             this.end = mazeToSolve.end;
             this.solvedPathValue = mazeToSolve.mazeVals.solValue;
+            this.visitedNodeValue = mazeToSolve.mazeVals.GetRandomUnusedChar();
         }
+        /// <summary>
+        /// gets nodes successors of each node and returns them in a list
+        /// </summary>
+        /// <param name="currentNode"></param>
+        /// <param name="nextBestNodeList"></param>
         public void GetNodeSuccessors(Node currentNode, List<Node> nextBestNodeList)
         {
-            if (currentNode.left != null)
+            List<Node> nodesToCheck = new List<Node>();
+            nodesToCheck.InsertRange(nodesToCheck.Count, new Node[] { currentNode.left, currentNode.right, currentNode.up, currentNode.down });
+            foreach (Node node in nodesToCheck)
             {
-                currentNode.left.setWeight(start);
+                if (node != null)
+                {
+                    node.setWeight(end);
+                    if (node.specialVal != visitedNodeValue)
+                    {
+                        if (node.specialVal != end.specialVal)
+                            node.specialVal = visitedNodeValue;
+                        node.prevNode = currentNode;
+                        nextBestNodeList.Add(node);
+                    }
+                }
+            }
+           /** if (currentNode.left != null)
+            {
+                currentNode.left.setWeight(end);
                 if (currentNode.left.specialVal != visitedNodeValue)
                 {
                     if(currentNode.left.specialVal != end.specialVal)
@@ -35,7 +58,7 @@ namespace MazeEx1
             }
             if (currentNode.right != null)
             {
-                currentNode.right.setWeight(start);
+                currentNode.right.setWeight(end);
                 if (currentNode.right.specialVal != visitedNodeValue)
                 {
                     if (currentNode.right.specialVal != end.specialVal)
@@ -46,7 +69,7 @@ namespace MazeEx1
             }
             if (currentNode.up != null)
             {
-                currentNode.up.setWeight(start);
+                currentNode.up.setWeight(end);
                 if (currentNode.up.specialVal != visitedNodeValue)
                 {
                     if (currentNode.up.specialVal != end.specialVal)
@@ -57,7 +80,7 @@ namespace MazeEx1
             }
             if (currentNode.down != null)
             {
-                currentNode.down.setWeight(start);
+                currentNode.down.setWeight(end);
                 if (currentNode.down.specialVal != visitedNodeValue)
                 {
                     if (currentNode.down.specialVal != end.specialVal)
@@ -65,8 +88,14 @@ namespace MazeEx1
                     currentNode.down.prevNode = currentNode;
                     nextBestNodeList.Add(currentNode.down);
                 }
-            }
+            }**/
         }
+        /// <summary>
+        /// starts from end assigning the found final path to the maze itself as a solution
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="solvedPathValue"></param>
         public void AssignSolutionToGraph(Node start, Node end, char solvedPathValue)
         {
             Node currentNode = end;

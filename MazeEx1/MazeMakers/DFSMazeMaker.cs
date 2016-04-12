@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MazeEx1
 {
     class DFSMazeMaker:IMazeMakeable
     {
+        //uses a a 2d array of nodes to create a maze by assigning one of them randomly
+        //to be the start and then traverses through the array from the start connecting nodes
+        //in a one way acyclic graph in a dFS manner
+        Node[,] mazeArray;
         static Random randomNumberGenerator = new Random();
         int mazeSize;
-        Node[,] mazeArray;
         char pathValue;
+        /// <summary>
+        /// algorithm that saves all details of the maze that it will need to create it and then creates it
+        /// </summary>
+        /// <param name="mazeToMake"></param>
         public void CreateMaze(Maze mazeToMake)
         {
             this.mazeSize = mazeToMake.mazeSize;
@@ -21,6 +26,10 @@ namespace MazeEx1
             TraverveNodes(mazeToMake.start, mazeToMake.start.location.col, mazeToMake.start.location.row);
             CreateEnd(mazeToMake);
         }
+        /// <summary>
+        /// creates starting node randomly
+        /// </summary>
+        /// <param name="mazeToMake"></param>
         public void CreateStart(Maze mazeToMake)
         {
             //randomNumberGenerator
@@ -31,6 +40,10 @@ namespace MazeEx1
             mazeToMake.start.specialVal = mazeToMake.mazeVals.startValue;
             mazeArray[mazeToMake.start.location.col, mazeToMake.start.location.row] = mazeToMake.start;
         }
+        /// <summary>
+        /// creates end by looping through array looking for node furthest from the end point
+        /// </summary>
+        /// <param name="mazeToMake"></param>
         public void CreateEnd(Maze mazeToMake)
         {
             int greatestLengthFromStart = 0;
@@ -52,6 +65,13 @@ namespace MazeEx1
                 mazeToMake.end = end;
             }
         }
+        /// <summary>
+        /// Traverses nodes recursively from start, connecting nodes that have not been initialized yet until 
+        /// it explores the whole maze
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="col"></param>
+        /// <param name="row"></param>
         public void TraverveNodes(Node node, int col, int row)
         {
             //if not at starting node

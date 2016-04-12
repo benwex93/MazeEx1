@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MazeEx1
+﻿namespace MazeEx1
 {
+    /// <summary>
+    /// interface for maze makers
+    /// </summary>
     interface IMazeMakeable
     {
         void CreateStart(Maze mazeToMake);

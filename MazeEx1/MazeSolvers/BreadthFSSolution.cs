@@ -9,6 +9,10 @@ namespace MazeEx1
 {
     class BreadthFSSolution : FirstSearcher
     {
+        /// <summary>
+        /// Solves maze by getting maze info, and traversing the nodes of the maze using BestFS
+        /// </summary>
+        /// <param name="maze"></param>
         public override void Solve(Maze maze)
         {
             GetMazeInfo(maze);
@@ -18,6 +22,12 @@ namespace MazeEx1
             this.start = maze.start;
             this.end = maze.end;
         }
+        /// <summary>
+        /// Traversing nodes using a queue to implement a BFS search but giving priority to
+        /// certain nodes that are closer to the end 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
         public void TraverseNodes(Node start, Node end)
         {
             Node currentNode = start;
@@ -35,6 +45,5 @@ namespace MazeEx1
             }
             AssignSolutionToGraph(start, currentNode, solvedPathValue);
         }
-
     }
 }
